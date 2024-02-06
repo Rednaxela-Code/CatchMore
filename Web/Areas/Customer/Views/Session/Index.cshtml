@@ -1,0 +1,59 @@
+﻿@model List<Session>
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Session List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+                
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Session" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-square"></i>   Create
+                </a>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Session Date
+                    </th>
+                    <th>
+                        Latitude
+                    </th>
+                    <th>
+                        Longitude
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderBy(o => o.Id))
+                {
+                    <tr>
+                        <td>@item.Date</td>
+                        <td>@item.Longitude</td>
+                        <td>@item.Latitude</td>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-asp-controller="Session" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square">  </i>Edit
+                                </a>
+                                <a asp-asp-controller="Session" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash3">  </i>Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

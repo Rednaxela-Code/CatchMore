@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatchMore.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240201143741_TestDev-SQL_Reset")]
-    partial class TestDevSQL_Reset
+    [Migration("20240208171352_FirstBase")]
+    partial class FirstBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,50 @@ namespace CatchMore.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CatchMore.Models.Catch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Catches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(286),
+                            Length = 50.0,
+                            Species = "Perch",
+                            Weight = 2.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(289),
+                            Length = 45.0,
+                            Species = "Perch",
+                            Weight = 1.5
+                        });
+                });
 
             modelBuilder.Entity("CatchMore.Models.Session", b =>
                 {
@@ -49,14 +93,14 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-                            Date = new DateTime(2024, 2, 1, 15, 37, 41, 149, DateTimeKind.Local).AddTicks(8772),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(128),
                             Latitude = 51.98807,
                             Longitude = 6.0045200000000003
                         },
                         new
                         {
                             Id = 11,
-                            Date = new DateTime(2024, 2, 1, 15, 37, 41, 149, DateTimeKind.Local).AddTicks(8803),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(160),
                             Latitude = 52.98807,
                             Longitude = 6.2045199999999996
                         });

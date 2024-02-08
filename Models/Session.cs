@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CatchMore.Models
 {
-    public class Session
+    public class Session : DataEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [DisplayName("Session Date")]
         public DateTime Date { get; set; }

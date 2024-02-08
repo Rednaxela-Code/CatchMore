@@ -51,7 +51,7 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2024, 2, 2, 10, 9, 58, 500, DateTimeKind.Local).AddTicks(4217),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(286),
                             Length = 50.0,
                             Species = "Perch",
                             Weight = 2.0
@@ -59,7 +59,7 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2024, 2, 2, 10, 9, 58, 500, DateTimeKind.Local).AddTicks(4220),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(289),
                             Length = 45.0,
                             Species = "Perch",
                             Weight = 1.5
@@ -91,14 +91,14 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-                            Date = new DateTime(2024, 2, 2, 10, 9, 58, 500, DateTimeKind.Local).AddTicks(4051),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(128),
                             Latitude = 51.98807,
                             Longitude = 6.0045200000000003
                         },
                         new
                         {
                             Id = 11,
-                            Date = new DateTime(2024, 2, 2, 10, 9, 58, 500, DateTimeKind.Local).AddTicks(4082),
+                            Date = new DateTime(2024, 2, 8, 18, 13, 52, 744, DateTimeKind.Local).AddTicks(160),
                             Latitude = 52.98807,
                             Longitude = 6.2045199999999996
                         });

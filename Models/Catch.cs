@@ -2,10 +2,8 @@
 
 namespace CatchMore.Models;
 
-public class Catch
+public class Catch : DataEntity
 {
-    [Key]
-    public int Id { get; set; }
     [Required] 
     public DateTime Date { get; set; }
     [Required]

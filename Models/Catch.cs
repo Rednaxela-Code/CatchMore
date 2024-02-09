@@ -14,4 +14,5 @@ public class Catch : DataEntity
     public int SessionId { get; set; }
     [ForeignKey("SessionId")]
     public Session session { get; set; }
+    public string ImageUrl { get; set; }
 }

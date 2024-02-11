@@ -4,6 +4,7 @@ using CatchMore.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatchMore.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240211192918_AddImageURL")]
+    partial class AddImageURL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,14 +35,12 @@ namespace CatchMore.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Length")
                         .HasColumnType("float");
-
 
                     b.Property<int?>("SessionId")
                         .HasColumnType("int");
@@ -62,7 +62,6 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-
                             Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2637),
                             Image = "",
                             Length = 50.0,
@@ -107,7 +106,6 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-
                             Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2532),
                             Latitude = 51.98807,
                             Longitude = 6.0045200000000003
@@ -115,7 +113,6 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 11,
-
                             Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2565),
                             Latitude = 52.98807,
                             Longitude = 6.2045199999999996
@@ -124,7 +121,6 @@ namespace CatchMore.DataAccess.Migrations
 
             modelBuilder.Entity("CatchMore.Models.Catch", b =>
                 {
-
                     b.HasOne("CatchMore.Models.Session", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId");

@@ -4,6 +4,7 @@ using CatchMore.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatchMore.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240211175107_AddFKRelation")]
+    partial class AddFKRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,14 +35,8 @@ namespace CatchMore.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Length")
                         .HasColumnType("float");
-
 
                     b.Property<int?>("SessionId")
                         .HasColumnType("int");
@@ -62,21 +58,16 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-
-                            Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2637),
-                            Image = "",
+                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8905),
                             Length = 50.0,
-                            SessionId = 10,
                             Species = "Perch",
                             Weight = 2.0
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2640),
-                            Image = "",
+                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8909),
                             Length = 45.0,
-                            SessionId = 11,
                             Species = "Perch",
                             Weight = 1.5
                         });
@@ -107,16 +98,14 @@ namespace CatchMore.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-
-                            Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2532),
+                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8796),
                             Latitude = 51.98807,
                             Longitude = 6.0045200000000003
                         },
                         new
                         {
                             Id = 11,
-
-                            Date = new DateTime(2024, 2, 11, 20, 29, 17, 833, DateTimeKind.Local).AddTicks(2565),
+                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8826),
                             Latitude = 52.98807,
                             Longitude = 6.2045199999999996
                         });
@@ -124,7 +113,6 @@ namespace CatchMore.DataAccess.Migrations
 
             modelBuilder.Entity("CatchMore.Models.Catch", b =>
                 {
-
                     b.HasOne("CatchMore.Models.Session", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId");

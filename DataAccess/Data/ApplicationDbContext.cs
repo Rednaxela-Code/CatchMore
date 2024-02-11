@@ -22,8 +22,9 @@ namespace CatchMore.DataAccess.Data
                 );
 
             modelBuilder.Entity<Catch>().HasData(
-                new Catch() { Id = 2, Date = DateTime.Now, Species = "Perch", Weight = 2, Length = 50, SessionId = 10, ImageUrl = "" },
-                new Catch() { Id = 3, Date = DateTime.Now, Species = "Perch", Weight = 1.5, Length = 45, SessionId = 11, ImageUrl = "" }
+
+                new Catch() { Id = 2, Date = DateTime.Now, Species = "Perch", Weight = 2, Length = 50, SessionId = 10, Image = ""},
+                new Catch() { Id = 3, Date = DateTime.Now, Species = "Perch", Weight = 1.5, Length = 45, SessionId = 11, Image = "" }
                 );
         }
     }

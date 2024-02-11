@@ -1,4 +1,4 @@
-﻿@model Catch
+﻿@model CatchMore.Models.ViewModels.CatchVM
 
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-primary bg-gradient ml-0 py-3">
@@ -13,24 +13,36 @@
             <div class="border p-3">
                 @* <div asp-validation-summary="All"></div> *@
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Date" class="form-control border-0 shadow" />
-                    <label asp-for="Date" class="ms-2" ></label>
-                    <span asp-validation-for="Date" class="text-danger"></span>
+                    <input asp-for="Catch.Date" class="form-control border-0 shadow" />
+                    <label asp-for="Catch.Date" class="ms-2" ></label>
+                    <span asp-validation-for="Catch.Date" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Species" class="form-control border-0 shadow" />
-                    <label asp-for="Species" class="ms-2"></label>
-                    <span asp-validation-for="Species" class="text-danger"></span>
+                    <input asp-for="Catch.Species" class="form-control border-0 shadow" />
+                    <label asp-for="Catch.Species" class="ms-2"></label>
+                    <span asp-validation-for="Catch.Species" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Length" class="form-control border-0 shadow" />
-                    <label asp-for="Length" class="ms-2"></label>
-                    <span asp-validation-for="Length" class="text-danger"></span>
+                    <input asp-for="Catch.Length" class="form-control border-0 shadow" />
+                    <label asp-for="Catch.Length" class="ms-2"></label>
+                    <span asp-validation-for="Catch.Length" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Weight" class="form-control border-0 shadow" />
-                    <label asp-for="Weight" class="ms-2"></label>
-                    <span asp-validation-for="Weight" class="text-danger"></span>
+                    <input asp-for="Catch.Weight" class="form-control border-0 shadow" />
+                    <label asp-for="Catch.Weight" class="ms-2"></label>
+                    <span asp-validation-for="Catch.Weight" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Catch.Image" class="form-control border-0 shadow" />
+                    <label asp-for="Catch.Image" class="ms-2"></label>
+                    <span asp-validation-for="Catch.Image" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Catch.SessionId" class="ms-2"></label>
+                    <select asp-for="Catch.SessionId" asp-items="@Model.SessionList" class="form-select border-0 shadow" >
+                        <option disabled selected>--Select Session--</option>
+                    </select>
+                    <span asp-validation-for="Catch.SessionId" class="text-danger"></span>
                 </div>
 
                 <div class="row mt-3">

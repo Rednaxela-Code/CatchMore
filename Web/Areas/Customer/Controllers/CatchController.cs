@@ -36,20 +36,29 @@ namespace Web.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CatchVM obj)
+        public IActionResult Create(CatchVM catchVM)
         {
-            if (obj.Catch.Date > DateTime.Now)
+            if (catchVM.Catch.Date > DateTime.Now)
             {
                 ModelState.AddModelError("Date", "The Catch start date must be in the past.");
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Catch.Add(obj.Catch);
+                _unitOfWork.Catch.Add(catchVM.Catch);
                 _unitOfWork.Save();
                 TempData["success"] = "Catch created successfully";
                 return RedirectToAction("Index", "Catch");
             }
-            return View();
+            else
+            {
+                catchVM.SessionList = _unitOfWork.Session.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Date.ToString(),
+                    Value = s.Id.ToString(),
+                });
+                return View(catchVM);
+            }
         }
 
         public IActionResult Edit(int? id)

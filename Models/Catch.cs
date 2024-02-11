@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CatchMore.Models;
@@ -11,8 +12,10 @@ public class Catch : DataEntity
     public string Species { get; set; }
     public double Length { get; set; }
     public double Weight { get; set; }
-    public int SessionId { get; set; }
+
+    [ValidateNever]
+    public string Image { get; set; }
+    public int? SessionId { get; set; }
     [ForeignKey("SessionId")]
-    public Session session { get; set; }
-    public string ImageUrl { get; set; }
+    public Session? Session { get; set; }
 }

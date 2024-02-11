@@ -1,6 +1,8 @@
 ﻿using CatchMore.DataAccess.Repository.IRepository;
 using CatchMore.Models;
+using CatchMore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Areas.Customer.Controllers
 {
@@ -20,19 +22,29 @@ namespace Web.Areas.Customer.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var catchViewModel = new CatchVM()
+            {
+                SessionList = _unitOfWork.Session.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Date.ToString(),
+                    Value = s.Id.ToString(),
+                }),
+                Catch = new Catch()
+            };
+            return View(catchViewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(Catch obj)
+        public IActionResult Create(CatchVM obj)
         {
-            if (obj.Date > DateTime.Now)
+            if (obj.Catch.Date > DateTime.Now)
             {
                 ModelState.AddModelError("Date", "The Catch start date must be in the past.");
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Catch.Add(obj);
+                _unitOfWork.Catch.Add(obj.Catch);
                 _unitOfWork.Save();
                 TempData["success"] = "Catch created successfully";
                 return RedirectToAction("Index", "Catch");

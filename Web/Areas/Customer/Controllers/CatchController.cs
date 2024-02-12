@@ -67,7 +67,10 @@ namespace Web.Areas.Customer.Controllers
             {
                 return NotFound();
             }
-            var catchFromDb = _unitOfWork.Catch.Get(i => i.Id == id);
+            var catchFromDb = new CatchVM()
+            {
+                Catch = _unitOfWork.Catch.Get(i => i.Id == id)
+            };
             if (catchFromDb == null)
             {
                 return NotFound();
@@ -75,12 +78,13 @@ namespace Web.Areas.Customer.Controllers
             return View(catchFromDb);
         }
 
+
         [HttpPost]
-        public IActionResult Edit(Catch obj)
+        public IActionResult Edit(CatchVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Catch.Update(obj);
+                _unitOfWork.Catch.Update(obj.Catch);
                 _unitOfWork.Save();
                 TempData["success"] = "Catch updated successfully";
                 return RedirectToAction("Index", "Catch");

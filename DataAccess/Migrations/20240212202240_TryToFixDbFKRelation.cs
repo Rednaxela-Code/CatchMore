@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CatchMore.DataAccess.Migrations
 {
-    public partial class AddingFKRelationCatchSession : Migration
+    public partial class TryToFixDbFKRelation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,8 @@ namespace CatchMore.DataAccess.Migrations
                     Species = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    SessionId = table.Column<int>(type: "int", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,29 +44,8 @@ namespace CatchMore.DataAccess.Migrations
                         name: "FK_Catches_Sessions_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Sessions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.InsertData(
-                table: "Sessions",
-                columns: new[] { "Id", "Date", "Latitude", "Longitude" },
-                values: new object[] { 10, new DateTime(2024, 2, 8, 18, 30, 18, 597, DateTimeKind.Local).AddTicks(9101), 51.98807, 6.0045200000000003 });
-
-            migrationBuilder.InsertData(
-                table: "Sessions",
-                columns: new[] { "Id", "Date", "Latitude", "Longitude" },
-                values: new object[] { 11, new DateTime(2024, 2, 8, 18, 30, 18, 597, DateTimeKind.Local).AddTicks(9134), 52.98807, 6.2045199999999996 });
-
-            migrationBuilder.InsertData(
-                table: "Catches",
-                columns: new[] { "Id", "Date", "Length", "SessionId", "Species", "Weight" },
-                values: new object[] { 2, new DateTime(2024, 2, 8, 18, 30, 18, 597, DateTimeKind.Local).AddTicks(9252), 50.0, 10, "Perch", 2.0 });
-
-            migrationBuilder.InsertData(
-                table: "Catches",
-                columns: new[] { "Id", "Date", "Length", "SessionId", "Species", "Weight" },
-                values: new object[] { 3, new DateTime(2024, 2, 8, 18, 30, 18, 597, DateTimeKind.Local).AddTicks(9256), 45.0, 11, "Perch", 1.5 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Catches_SessionId",

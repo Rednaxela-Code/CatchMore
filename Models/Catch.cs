@@ -14,7 +14,7 @@ public class Catch : DataEntity
     public double Weight { get; set; }
 
     [ValidateNever]
-    public string Image { get; set; }
+    public string? Image { get; set; }
     public int? SessionId { get; set; }
     [ForeignKey("SessionId")]
     public Session? Session { get; set; }

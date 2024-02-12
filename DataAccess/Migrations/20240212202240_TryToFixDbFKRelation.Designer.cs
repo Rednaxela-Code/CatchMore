@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatchMore.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240211175107_AddFKRelation")]
-    partial class AddFKRelation
+    [Migration("20240212202240_TryToFixDbFKRelation")]
+    partial class TryToFixDbFKRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,9 @@ namespace CatchMore.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Length")
                         .HasColumnType("float");
 
@@ -53,24 +56,6 @@ namespace CatchMore.DataAccess.Migrations
                     b.HasIndex("SessionId");
 
                     b.ToTable("Catches");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8905),
-                            Length = 50.0,
-                            Species = "Perch",
-                            Weight = 2.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8909),
-                            Length = 45.0,
-                            Species = "Perch",
-                            Weight = 1.5
-                        });
                 });
 
             modelBuilder.Entity("CatchMore.Models.Session", b =>
@@ -93,22 +78,6 @@ namespace CatchMore.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sessions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 10,
-                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8796),
-                            Latitude = 51.98807,
-                            Longitude = 6.0045200000000003
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Date = new DateTime(2024, 2, 11, 18, 51, 7, 689, DateTimeKind.Local).AddTicks(8826),
-                            Latitude = 52.98807,
-                            Longitude = 6.2045199999999996
-                        });
                 });
 
             modelBuilder.Entity("CatchMore.Models.Catch", b =>

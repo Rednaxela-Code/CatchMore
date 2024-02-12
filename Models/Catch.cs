@@ -12,6 +12,7 @@ public class Catch : DataEntity
     public string Species { get; set; }
     public double Length { get; set; }
     public double Weight { get; set; }
+    public string? Description { get; set; }
 
     [ValidateNever]
     public string? Image { get; set; }

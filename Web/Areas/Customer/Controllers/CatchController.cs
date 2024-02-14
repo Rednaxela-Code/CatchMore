@@ -10,9 +10,12 @@ namespace Web.Areas.Customer.Controllers
     public class CatchController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CatchController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CatchController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -36,7 +39,7 @@ namespace Web.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CatchVM catchVM)
+        public IActionResult Create(CatchVM catchVM, IFormFile? file)
         {
             if (catchVM.Catch.Date > DateTime.Now)
             {
@@ -44,6 +47,18 @@ namespace Web.Areas.Customer.Controllers
             }
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = String.Concat(Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+                    string catchPath = Path.Combine(wwwRootPath, @"images\catch");
+
+                    using (var fileStream = new FileStream(Path.Combine(catchPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    catchVM.Catch.Image = String.Concat(@"\images\catch\", fileName);
+                }
                 _unitOfWork.Catch.Add(catchVM.Catch);
                 _unitOfWork.Save();
                 TempData["success"] = "Catch created successfully";
@@ -86,11 +101,34 @@ namespace Web.Areas.Customer.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(CatchVM obj)
+        public IActionResult Edit(CatchVM catchVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Catch.Update(obj.Catch);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = String.Concat(Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+                    string catchPath = Path.Combine(wwwRootPath, @"images\catch");
+
+                    if (!string.IsNullOrEmpty(catchVM.Catch.Image))
+                    {
+                        //Delete old Image
+                        var oldImagePath = 
+                            Path.Combine(wwwRootPath, catchVM.Catch.Image.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(catchPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    catchVM.Catch.Image = String.Concat(@"\images\catch\", fileName);
+                }
+                _unitOfWork.Catch.Update(catchVM.Catch);
                 _unitOfWork.Save();
                 TempData["success"] = "Catch updated successfully";
                 return RedirectToAction("Index", "Catch");

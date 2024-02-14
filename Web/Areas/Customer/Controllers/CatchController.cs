@@ -105,6 +105,17 @@ namespace Web.Areas.Customer.Controllers
                     string fileName = String.Concat(Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
                     string catchPath = Path.Combine(wwwRootPath, @"images\catch");
 
+                    if (!string.IsNullOrEmpty(catchVM.Catch.Image))
+                    {
+                        //Delete old Image
+                        var oldImagePath = 
+                            Path.Combine(wwwRootPath, catchVM.Catch.Image.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStream = new FileStream(Path.Combine(catchPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);

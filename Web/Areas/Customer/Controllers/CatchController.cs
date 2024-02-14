@@ -69,6 +69,12 @@ namespace Web.Areas.Customer.Controllers
             }
             var catchFromDb = new CatchVM()
             {
+                SessionList = _unitOfWork.Session.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Date.ToString(),
+                    Value = s.Id.ToString(),
+                }),
                 Catch = _unitOfWork.Catch.Get(i => i.Id == id)
             };
             if (catchFromDb == null)

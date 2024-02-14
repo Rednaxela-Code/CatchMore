@@ -10,63 +10,88 @@
     </div>
     <div class="card-body p-4">
         <form method="post" class="row" enctype="multipart/form-data">
-            <div class="border p-3">
-                @* <div asp-validation-summary="All"></div> *@
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Date" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Date" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Date" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Species" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Species" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Species" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Length" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Length" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Length" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Weight" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Weight" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Weight" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Description" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Description" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Description" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <input type="file" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Image" class="ms-2"></label>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <label asp-for="Catch.SessionId" class="ms-2"></label>
-                    <select asp-for="Catch.SessionId" asp-items="@Model.SessionList" class="form-select border-0 shadow">
-                        <option disabled selected>--Select Session--</option>
-                    </select>
-                    <span asp-validation-for="Catch.SessionId" class="text-danger"></span>
-                </div>
+            <input asp-for="Catch.Id" hidden />
+            <input asp-for="Catch.Image" hidden />
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        @* <div asp-validation-summary="All"></div> *@
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Catch.Date" class="form-control border-0 shadow" />
+                            <label asp-for="Catch.Date" class="ms-2"></label>
+                            <span asp-validation-for="Catch.Date" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Catch.Species" class="form-control border-0 shadow" />
+                            <label asp-for="Catch.Species" class="ms-2"></label>
+                            <span asp-validation-for="Catch.Species" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Catch.Length" class="form-control border-0 shadow" />
+                            <label asp-for="Catch.Length" class="ms-2"></label>
+                            <span asp-validation-for="Catch.Length" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Catch.Weight" class="form-control border-0 shadow" />
+                            <label asp-for="Catch.Weight" class="ms-2"></label>
+                            <span asp-validation-for="Catch.Weight" class="text-danger"></span>
+                        </div>
+                        <div class="py-2 col-12">
+                            <label asp-for="Catch.Description" class="ms-2 text-muted"></label>
+                            <textarea asp-for="Catch.Description" class="form-control border-0 shadow">
 
-                <div class="row mt-3">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Edit</button>
+                    </textarea>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input type="file" name="file" class="form-control border-0 shadow" />
+                            <label asp-for="Catch.Image" class="ms-2"></label>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Catch.SessionId" class="ms-2"></label>
+                            <select asp-for="Catch.SessionId" asp-items="@Model.SessionList" class="form-select border-0 shadow">
+                                <option disabled selected>--Select Session--</option>
+                            </select>
+                            <span asp-validation-for="Catch.SessionId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-6 col-md-3">
+                                <button type="submit" class="btn btn-primary form-control">Create</button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Catch" asp-action="Index" class="btn btn-secondary border form-control">
+                                    Back to List
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Catch" asp-action="Index" class="btn btn-secondary border form-control">
-                            Back to List
-                        </a>
-                    </div>
+                </div>
+                <div class="col-2">
+                    <img src="@Model.Catch.Image" width="100%"
+                         style="border-radius:5px; border:1px solid #bbb9b9" />
                 </div>
             </div>
+
         </form>
     </div>
 </div>
 
 
-
 @section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link media searchreplace table visualblocks wordcount mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
     @{
         <partial name="_ValidationScriptsPartial" />
     }

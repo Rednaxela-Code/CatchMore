@@ -32,10 +32,11 @@
                     <label asp-for="Catch.Weight" class="ms-2"></label>
                     <span asp-validation-for="Catch.Weight" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Catch.Description" class="form-control border-0 shadow" />
-                    <label asp-for="Catch.Description" class="ms-2"></label>
-                    <span asp-validation-for="Catch.Description" class="text-danger"></span>
+                <div class="py-2 col-12">
+                    <label asp-for="Catch.Description" class="ms-2 text-muted"></label>
+                    <textarea asp-for="Catch.Description" class="form-control border-0 shadow">
+
+                    </textarea>
                 </div>
                 <div class="form-floating py-2 col-12">
                     <input type="file" class="form-control border-0 shadow" />
@@ -51,7 +52,7 @@
 
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Edit</button>
+                        <button type="submit" class="btn btn-primary form-control">Create</button>
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-controller="Catch" asp-action="Index" class="btn btn-secondary border form-control">
@@ -67,6 +68,20 @@
 
 
 @section Scripts {
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
     @{
         <partial name="_ValidationScriptsPartial" />
     }

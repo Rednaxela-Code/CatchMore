@@ -33,6 +33,9 @@
                     <th>
                         Weight
                     </th>
+                    <th>
+                        Session Name
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,6 +47,7 @@
                         <td>@item.Species</td>
                         <td>@item.Length</td>
                         <td>@item.Weight</td>
+                        <td>@item.Session.SessionName</td>
                         <td>
                             <div class="w-75 btn-group" role="group">
                                 <a asp-asp-controller="Catch" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary mx-2">

@@ -19,7 +19,7 @@ namespace Web.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
-            var objCatchList = _unitOfWork.Catch.GetAll().ToList();
+            var objCatchList = _unitOfWork.Catch.GetAll(includeProperties:"Session").ToList();
             return View(objCatchList);
         }
 

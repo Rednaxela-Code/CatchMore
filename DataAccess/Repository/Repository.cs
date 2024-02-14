@@ -35,12 +35,12 @@ namespace CatchMore.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperies = null)
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = _DbSet;
-            if (!string.IsNullOrEmpty(includeProperies))
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var inclProp in includeProperies.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                foreach (var inclProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(inclProp);
                 }

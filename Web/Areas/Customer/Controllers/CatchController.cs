@@ -163,5 +163,14 @@ namespace Web.Areas.Customer.Controllers
             TempData["success"] = "Catch deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var objCatchList = _unitOfWork.Catch.GetAll(includeProperties: "Session").ToList();
+            return Json(new { data = objCatchList });
+        }
+        #endregion
     }
 }

@@ -1,10 +1,13 @@
 ﻿using CatchMore.DataAccess.Repository.IRepository;
 using CatchMore.Models;
+using CatchMore.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize(Roles = SD.Role_Customer)]
     public class SessionController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

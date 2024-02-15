@@ -1,4 +1,5 @@
-﻿using CatchMore.Models;
+﻿using CatchMore.DataAccess.Repository.IRepository;
+using CatchMore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,15 +9,18 @@ namespace Web.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Catch> catchList = _unitOfWork.Catch.GetAll(includeProperties: "Session");
+            return View(catchList);
         }
 
         public IActionResult Privacy()

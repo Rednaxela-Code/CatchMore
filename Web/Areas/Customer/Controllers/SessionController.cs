@@ -1,8 +1,11 @@
 ﻿using CatchMore.DataAccess.Repository.IRepository;
 using CatchMore.Models;
+using CatchMore.Models.ViewModels;
 using CatchMore.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
+using System.Security.Claims;
 
 namespace Web.Areas.Customer.Controllers
 {
@@ -15,10 +18,14 @@ namespace Web.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        [Authorize]
         public IActionResult Index()
         {
-            var objSessionList = _unitOfWork.Session.GetAll().ToList();
-            return View(objSessionList);
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var sessionList = _unitOfWork.Session.GetAll().Where(u => u.ApplicationUserId == userId).ToList();
+
+            return View(sessionList);
         }
 
         public IActionResult Create()
@@ -27,29 +34,32 @@ namespace Web.Areas.Customer.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(Session obj)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            obj.ApplicationUserId = userId;
+
             if (obj.Date > DateTime.Now)
             {
                 ModelState.AddModelError("Date", "The Session start date must be in the past.");
             }
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Session.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Session created successfully";
-                return RedirectToAction("Index", "Session");
-            }
-            return View();
+            _unitOfWork.Session.Add(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Session created successfully";
+            return RedirectToAction("Index", "Session");
         }
 
         public IActionResult Edit(int? id)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var sessionFromDb = _unitOfWork.Session.Get(i => i.Id == id);
+            var sessionFromDb = _unitOfWork.Session.Get(i => i.ApplicationUserId == userId && i.Id == id);
             if (sessionFromDb == null)
             {
                 return NotFound();
@@ -60,23 +70,25 @@ namespace Web.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult Edit(Session obj)
         {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Session.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Session updated successfully";
-                return RedirectToAction("Index", "Session");
-            }
-            return View();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            obj.ApplicationUserId = userId;
+            _unitOfWork.Session.Update(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Session updated successfully";
+            return RedirectToAction("Index", "Session");
         }
+
 
         public IActionResult Delete(int? id)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var sessionFromDb = _unitOfWork.Session.Get(i => i.Id == id);
+            var sessionFromDb = _unitOfWork.Session.Get(i => i.ApplicationUserId == userId && i.Id == id);
             if (sessionFromDb == null)
             {
                 return NotFound();
@@ -87,7 +99,9 @@ namespace Web.Areas.Customer.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _unitOfWork.Session.Get(i => i.Id == id);
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var obj = _unitOfWork.Session.Get(i => i.ApplicationUserId == userId && i.Id == id);
             if (obj == null)
             {
                 return NotFound();

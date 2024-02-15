@@ -19,4 +19,7 @@ public class Catch : DataEntity
     public int? SessionId { get; set; }
     [ForeignKey("SessionId")]
     public Session? Session { get; set; }
+    public string ApplicationUserId { get; set; }
+    [ForeignKey("ApplicationUserId")]
+    public ApplicationUser ApplicationUser { get; set; }
 }

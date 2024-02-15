@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.OrderBy(o => o.Id))
+                @foreach (var item in Model)
                 {
                     <tr>
                         <td>@item.SessionName</td>

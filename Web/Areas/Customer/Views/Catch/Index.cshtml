@@ -18,7 +18,7 @@
                 </a>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>
@@ -39,28 +39,10 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in Model.OrderBy(o => o.Id))
-                {
-                    <tr>
-                        <td>@item.Date</td>
-                        <td>@item.Species</td>
-                        <td>@item.Length</td>
-                        <td>@item.Weight</td>
-                        <td>@item.Session.SessionName</td>
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                                <a asp-asp-controller="Catch" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary mx-2">
-                                    <i class="bi bi-pencil-square">  </i>Edit
-                                </a>
-                                <a asp-asp-controller="Catch" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger mx-2">
-                                    <i class="bi bi-trash3">  </i>Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
         </table>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/catch.js"></script>
+}

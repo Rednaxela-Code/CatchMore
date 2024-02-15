@@ -23,6 +23,12 @@ namespace Web.Areas.Customer.Controllers
             return View(catchList);
         }
 
+        public IActionResult Details(int id)
+        {
+            var catchDetail  = _unitOfWork.Catch.Get(i => i.Id == id ,includeProperties: "Session");
+            return View(catchDetail);
+        }
+
         public IActionResult Privacy()
         {
             return View();

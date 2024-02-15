@@ -18,6 +18,11 @@
                 </div>
                 @* <div asp-validation-summary="All"></div> *@
                 <div class="form-floating py-2 col-12">
+                    <input asp-for="SessionName" class="form-control border-0 shadow" />
+                    <label asp-for="SessionName" class="ms-2" ></label>
+                    <span asp-validation-for="SessionName" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
                     <input asp-for="Date" class="form-control border-0 shadow" />
                     <label asp-for="Date" class="ms-2"></label>
                     <span asp-validation-for="Date" class="text-danger"></span>

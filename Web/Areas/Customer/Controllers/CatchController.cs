@@ -3,6 +3,7 @@ using CatchMore.Models;
 using CatchMore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace Web.Areas.Customer.Controllers
 {
@@ -19,7 +20,7 @@ namespace Web.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
-            var objCatchList = _unitOfWork.Catch.GetAll().ToList();
+            var objCatchList = _unitOfWork.Catch.GetAll(includeProperties:"Session").ToList();
             return View(objCatchList);
         }
 
@@ -136,32 +137,38 @@ namespace Web.Areas.Customer.Controllers
             return View();
         }
 
-        public IActionResult Delete(int? id)
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var catchFromDb = _unitOfWork.Catch.Get(i => i.Id == id);
-            if (catchFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(catchFromDb);
+            var objCatchList = _unitOfWork.Catch.GetAll(includeProperties: "Session").ToList();
+            return Json(new { data = objCatchList });
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        [HttpDelete]
+        public IActionResult Delete(int? id)
         {
-            var obj = _unitOfWork.Catch.Get(i => i.Id == id);
-            if (obj == null)
+            var catchToBeDeleted = _unitOfWork.Catch.Get(i => i.Id == id);
+            if (catchToBeDeleted == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting" });
             }
-            _unitOfWork.Catch.Remove(obj);
+            if (!string.IsNullOrEmpty(catchToBeDeleted.Image))
+            {
+                var oldImagePath =
+                            Path.Combine(_webHostEnvironment.WebRootPath,
+                            catchToBeDeleted.Image.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+            }
+
+            _unitOfWork.Catch.Remove(catchToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Catch deleted successfully";
-            return RedirectToAction("Index");
+
+            return Json(new {success = true, message = "Catch Deleted"});
         }
+        #endregion
     }
 }

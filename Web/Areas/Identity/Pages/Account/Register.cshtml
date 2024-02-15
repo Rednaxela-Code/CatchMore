@@ -15,8 +15,13 @@
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="row">
                     <h3 class="border-bottom pb-3 mb-4 text-secondary text-center">Create a new account.</h3>
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                    <div class="form-floating mb-3 col-md-12">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.UserNameHandle" class="form-control" autocomplete="username" aria-required="true" placeholder="Hans Anders" />
+                        <label asp-for="Input.UserNameHandle" class="ms-2 text-muted">User Name</label>
+                        <span asp-validation-for="Input.UserNameHandle" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="hans@anders.com" />
                         <label asp-for="Input.Email" class="ms-2 text-muted">Email</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>

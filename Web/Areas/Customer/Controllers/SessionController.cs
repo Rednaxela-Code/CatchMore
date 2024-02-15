@@ -51,6 +51,7 @@ namespace Web.Areas.Customer.Controllers
             return RedirectToAction("Index", "Session");
         }
 
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -67,6 +68,7 @@ namespace Web.Areas.Customer.Controllers
             return View(sessionFromDb);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(Session obj)
         {
@@ -79,7 +81,7 @@ namespace Web.Areas.Customer.Controllers
             return RedirectToAction("Index", "Session");
         }
 
-
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -96,6 +98,7 @@ namespace Web.Areas.Customer.Controllers
             return View(sessionFromDb);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {

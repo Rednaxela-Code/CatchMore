@@ -145,6 +145,7 @@ namespace Web.Areas.Customer.Controllers
             return Json(new { data = objCatchList });
         }
 
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var catchToBeDeleted = _unitOfWork.Catch.Get(i => i.Id == id);
@@ -152,12 +153,15 @@ namespace Web.Areas.Customer.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            var oldImagePath =
+            if (!string.IsNullOrEmpty(catchToBeDeleted.Image))
+            {
+                var oldImagePath =
                             Path.Combine(_webHostEnvironment.WebRootPath,
                             catchToBeDeleted.Image.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
             }
 
             _unitOfWork.Catch.Remove(catchToBeDeleted);

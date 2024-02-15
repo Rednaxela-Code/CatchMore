@@ -14,5 +14,6 @@ namespace CatchMore.DataAccess.Data
         //DB Tables
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Catch> Catches { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

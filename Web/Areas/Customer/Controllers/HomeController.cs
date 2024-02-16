@@ -1,5 +1,6 @@
 ﻿using CatchMore.DataAccess.Repository.IRepository;
 using CatchMore.Models;
+using CatchMore.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

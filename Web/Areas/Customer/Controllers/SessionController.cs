@@ -26,7 +26,7 @@ namespace Web.Areas.Customer.Controllers
             return View(sessionList);
         }
 
-
+        [Authorize]
         public IActionResult Create()
         {
             return View();

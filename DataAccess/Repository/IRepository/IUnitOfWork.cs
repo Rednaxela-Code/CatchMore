@@ -4,6 +4,7 @@
     {
         ISessionRepository Session { get; }
         ICatchRepository Catch { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         void Save();
     }
 }

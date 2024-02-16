@@ -8,12 +8,14 @@ namespace CatchMore.DataAccess.Repository
         private ApplicationDbContext _db;
         public ISessionRepository Session {get; private set; }
         public ICatchRepository Catch {get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Session = new SessionRepository(_db);
             Catch = new CatchRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
         }
 
         public void Save()

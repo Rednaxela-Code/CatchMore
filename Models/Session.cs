@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CatchMore.Models
 {
@@ -17,5 +18,8 @@ namespace CatchMore.Models
         [Required]
         [DisplayName("Longitude")]
         public double Longitude { get; set; }
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

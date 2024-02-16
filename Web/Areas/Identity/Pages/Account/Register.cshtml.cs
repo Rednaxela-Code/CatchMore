@@ -137,9 +137,9 @@ namespace Web.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 // TODO: UsernameHandle use it for Login maybe?
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserNameHandle, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.UserNameHandle = Input.UserNameHandle;
+                //user.UserNameHandle = Input.UserNameHandle;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

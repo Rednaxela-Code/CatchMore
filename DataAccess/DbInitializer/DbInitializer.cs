@@ -47,6 +47,7 @@ namespace CatchMore.DataAccess.DbInitializer
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
 
                 // Create Admin User
+                // TODO: Debug CreateAsync, this gives "Invalid login attempt" for created user.
                 _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = "ADMIN-Alexander",

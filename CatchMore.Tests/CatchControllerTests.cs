@@ -21,7 +21,10 @@ namespace CatchMore.Tests
             var controller = new CatchController(mockUnitOfWork.Object, mockWebHostEnv.Object);
             var model = new CatchVM
             {
-                
+                Catch = new Catch
+                {
+                    Date = DateTime.Now,
+                }
             };
 
             //Act

@@ -29,4 +29,10 @@
     <Folder Include="wwwroot\images\catch\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\mapsEdit.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

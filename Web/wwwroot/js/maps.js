@@ -1,27 +1,50 @@
-// Initialize and add the map
-let map;
+var map;
+var marker;
 
-async function initMap() { 
-    // The location of Uluru
-    const position = { lat: -25.344, lng: 131.031 };
-    // Request needed libraries.
-    //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-    // The map, centered at Uluru
-    map = new Map(document.getElementById("map"), {
-        zoom: 4,
-        center: position,
-        mapId: "DEMO_MAP_ID",
+function initMap() {
+    var initialPosition = { lat: 0, lng: 0 }; // Initial position for the map
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: initialPosition,
+        zoom: 8
     });
 
-    // The marker, positioned at Uluru
-    const marker = new AdvancedMarkerElement({
+    marker = new google.maps.Marker({
+        position: initialPosition,
         map: map,
-        position: position,
-        title: "Uluru",
+        draggable: true
     });
+
+    google.maps.event.addListener(marker, 'dragend', function () {
+        updatePosition(marker.getPosition());
+    });
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+            marker.setPosition(pos);
+            updatePosition(pos);
+        }, function () {
+            handleLocationError(true, marker.getPosition());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, marker.getPosition());
+    }
 }
 
-initMap();
+function updatePosition(position) {
+    document.getElementById("latitude").value = position.lat();
+    document.getElementById("longitude").value = position.lng();
+}
+
+function handleLocationError(browserHasGeolocation, pos) {
+    alert(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+}

@@ -36,7 +36,10 @@ namespace Web.Areas.Customer.Controllers
         [Authorize]
         public IActionResult Create(Session obj)
         {
-            obj.ApplicationUserId = GetUserId();
+            if (obj.ApplicationUserId == null)
+            {
+                obj.ApplicationUserId = GetUserId();
+            }
 
             if (obj.Date > DateTime.Now)
             {

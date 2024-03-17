@@ -2,7 +2,7 @@ var map;
 var marker;
 
 function initMap() {
-    var location = @Html.Raw(jsonLocation); // Deserialize JSON location object
+    //var location = Html.Raw(jsonLocation); // Deserialize JSON location object
     var initialPosition = { lat: location.Latitude, lng: location.Longitude }; // Get latitude and longitude from location object
 
     map = new google.maps.Map(document.getElementById('map'), {

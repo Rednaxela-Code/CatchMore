@@ -66,8 +66,9 @@
     @{
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmGRUQDtImxoadNidg9q9RPAQkOMXm4V4&libraries=places"></script>
         <script src="//polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script>var location = @Html.Raw(jsonLocation);</script>
         <script src="~/js/mapsEdit.js"></script>
-        <partial name="_ValidationScriptsPartial" />
         <script>initMap();</script>
+        <partial name="_ValidationScriptsPartial" />
     }
 }

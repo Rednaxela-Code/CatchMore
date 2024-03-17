@@ -28,7 +28,7 @@ function initMap() {
 
             map.setCenter(pos);
             marker.setPosition(pos);
-            updatePosition(pos);
+            updatePosition(pos, 8);
         }, function () {
             handleLocationError(true, marker.getPosition());
         });
@@ -38,9 +38,9 @@ function initMap() {
     }
 }
 
-function updatePosition(position) {
-    document.getElementById("latitude").value = position.lat();
-    document.getElementById("longitude").value = position.lng();
+function updatePosition(position, decimalPlaces) {
+    document.getElementById("latitude").value = position.lat().toFixed(decimalPlaces);
+    document.getElementById("longitude").value = position.lng().toFixed(decimalPlaces);
 }
 
 function handleLocationError(browserHasGeolocation, pos) {

@@ -3,8 +3,13 @@ var marker;
 
 function initMap() {
     //var location = Html.Raw(jsonLocation); // Deserialize JSON location object
-    var initialPosition = { lat: location.Latitude, lng: location.Longitude }; // Get latitude and longitude from location object
-
+    if (location.Latitude == null) {
+        var initialPosition = { lat: 0, lng: 0 };
+    }
+    else {
+        var initialPosition = { lat: location.Latitude, lng: location.Longitude }; // Get latitude and longitude from location object
+    }
+    
     map = new google.maps.Map(document.getElementById('map'), {
         center: initialPosition,
         zoom: 8

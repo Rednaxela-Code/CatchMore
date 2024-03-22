@@ -1,7 +1,7 @@
 ﻿@model Session
 
 @{
-    var location = new Session { Latitude = Model.Latitude, Longitude = Model.Longitude };
+    var location = new SessionLocation { Latitude = Model.Latitude, Longitude = Model.Longitude };
     var jsonLocation = Newtonsoft.Json.JsonConvert.SerializeObject(location);
 }
 
@@ -65,9 +65,38 @@
 @section Scripts {
     @{
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmGRUQDtImxoadNidg9q9RPAQkOMXm4V4&libraries=places"></script>
+        <script>
+            var map;
+            var marker;
+
+            function initMap() {
+                var location = @Html.Raw(jsonLocation); // Deserialize JSON location object
+                var initialPosition = { lat: location.Latitude, lng: location.Longitude }; // Get latitude and longitude from location object
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: initialPosition,
+                    zoom: 8
+                });
+
+                marker = new google.maps.Marker({
+                    position: initialPosition,
+                    map: map,
+                    draggable: true
+                });
+
+                google.maps.event.addListener(marker, 'dragend', function () {
+                    updatePosition(marker.getPosition());
+                });
+            }
+
+            function updatePosition(position) {
+                document.getElementById("latitude").value = position.lat();
+                document.getElementById("longitude").value = position.lng();
+            }
+        </script>
         <script src="//polyfill.io/v3/polyfill.min.js?features=default"></script>
-        <script>var location = @Html.Raw(location);</script>
-        <script src="~/js/mapsEdit.js"></script>
+        //<script>var location = @Html.Raw(location);</script>
+        //<script src="~/js/mapsEdit.js"></script>
         <script>initMap();</script>
         <partial name="_ValidationScriptsPartial" />
     }

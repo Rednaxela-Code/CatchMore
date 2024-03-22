@@ -15,7 +15,7 @@ function initMap() {
     });
 
     google.maps.event.addListener(marker, 'dragend', function () {
-        updatePosition(marker.getPosition());
+        updatePosition(marker.getPosition(), 8);
     });
 
     // Try HTML5 geolocation.

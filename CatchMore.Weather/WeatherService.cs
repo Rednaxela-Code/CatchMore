@@ -15,6 +15,7 @@ namespace CatchMore.Weather
             var client = _httpClient.CreateClient();
         }
 
+        // Do i need a settings object? Settings are super simple as they are...
         public ApiSettings InitSettings()
         {
             ApiSettings settings = new ApiSettings();

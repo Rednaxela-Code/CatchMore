@@ -45,6 +45,8 @@ namespace Web.Areas.Customer.Controllers
             {
                 ModelState.AddModelError("Date", "The Session start date must be in the past.");
             }
+            obj.Latitude = obj.Latitude.CorrectDouble();
+            obj.Longitude = obj.Longitude.CorrectDouble();
             _unitOfWork.Session.Add(obj);
             _unitOfWork.Save();
             TempData["success"] = "Session created successfully";

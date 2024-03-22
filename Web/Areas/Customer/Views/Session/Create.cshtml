@@ -24,14 +24,17 @@
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Latitude" class="form-control border-0 shadow" />
+                    <input asp-for="Latitude" type="text" id="latitude" class="form-control border-0 shadow" />
                     <label asp-for="Latitude" class="ms-2"></label>
                     <span asp-validation-for="Latitude" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Longitude" class="form-control border-0 shadow" />
+                    <input asp-for="Longitude" type="text" id="longitude" class="form-control border-0 shadow" />
                     <label asp-for="Longitude" class="ms-2"></label>
                     <span asp-validation-for="Longitude" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <div id="map" style="height: 400px; width: 100%;"></div>
                 </div>
 
                 <div class="row mt-3">
@@ -53,6 +56,10 @@
 
 @section Scripts {
     @{
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmGRUQDtImxoadNidg9q9RPAQkOMXm4V4&libraries=places"></script>
+        <script src="//polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script src="~/js/maps.js"></script>
         <partial name="_ValidationScriptsPartial" />
+        <script>initMap();</script>
     }
 }

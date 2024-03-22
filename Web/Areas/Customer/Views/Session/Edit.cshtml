@@ -1,5 +1,10 @@
 ﻿@model Session
 
+@{
+    var location = new SessionLocation { Latitude = Model.Latitude, Longitude = Model.Longitude };
+    var jsonLocation = Newtonsoft.Json.JsonConvert.SerializeObject(location);
+}
+
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-primary bg-gradient ml-0 py-3">
         <div class="row">
@@ -28,14 +33,17 @@
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Latitude" class="form-control border-0 shadow" />
+                    <input asp-for="Latitude" disabled class="form-control border-0 shadow" />
                     <label asp-for="Latitude" class="ms-2"></label>
                     <span asp-validation-for="Latitude" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Longitude" class="form-control border-0 shadow" />
+                    <input asp-for="Longitude" disabled class="form-control border-0 shadow" />
                     <label asp-for="Longitude" class="ms-2"></label>
                     <span asp-validation-for="Longitude" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <div id="map" style="height: 400px; width: 100%;"></div>
                 </div>
 
                 <div class="row mt-3">
@@ -56,6 +64,40 @@
 
 @section Scripts {
     @{
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmGRUQDtImxoadNidg9q9RPAQkOMXm4V4&libraries=places"></script>
+        <script>
+            var map;
+            var marker;
+
+            function initMap() {
+                var location = @Html.Raw(jsonLocation); // Deserialize JSON location object
+                var initialPosition = { lat: location.Latitude, lng: location.Longitude }; // Get latitude and longitude from location object
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: initialPosition,
+                    zoom: 8
+                });
+
+                marker = new google.maps.Marker({
+                    position: initialPosition,
+                    map: map,
+                    draggable: false
+                });
+
+                google.maps.event.addListener(marker, 'dragend', function () {
+                //     updatePosition(marker.getPosition());
+                });
+            }
+
+            function updatePosition(position) {
+                document.getElementById("latitude").value = position.lat();
+                document.getElementById("longitude").value = position.lng();
+            }
+        </script>
+        <script src="//polyfill.io/v3/polyfill.min.js?features=default"></script>
+        //<script>var location = @Html.Raw(location);</script>
+        //<script src="~/js/mapsEdit.js"></script>
+        <script>initMap();</script>
         <partial name="_ValidationScriptsPartial" />
     }
 }

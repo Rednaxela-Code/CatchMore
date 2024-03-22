@@ -73,8 +73,6 @@ namespace Web.Areas.Customer.Controllers
         public IActionResult Edit(Session obj)
         {
             obj.ApplicationUserId = GetUserId();
-            obj.Latitude = obj.Latitude.CorrectDouble();
-            obj.Longitude = obj.Longitude.CorrectDouble();
             _unitOfWork.Session.Update(obj);
             _unitOfWork.Save();
             TempData["success"] = "Session updated successfully";
